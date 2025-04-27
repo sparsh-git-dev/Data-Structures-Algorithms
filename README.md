@@ -1,5 +1,4 @@
-# DSA-Journal
-This repository documents my journey of solving Data Structures and Algorithms (DSA) problems, primarily from LeetCode.
+# DSA
 Welcome to my curated DSA practice repository. Here I document my problem-solving journey with:
 - ✅ Problem links
 - ✅ Final solution codes
