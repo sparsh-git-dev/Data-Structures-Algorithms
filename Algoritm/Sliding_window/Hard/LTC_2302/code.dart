@@ -1,3 +1,4 @@
+/// SOLUTION : https://leetcode.com/problems/count-subarrays-with-score-less-than-k/solutions/6694454/beats-super-easy-beginners-java-c-c-python-javascript-dart/?envType=daily-question&envId=2025-04-28
 void main() {
   slidingWIndowCountSubarrays([2, 1, 4, 3, 5], 10);
 }
