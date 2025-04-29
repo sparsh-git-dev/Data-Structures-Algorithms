@@ -1,5 +1,6 @@
 import 'dart:math';
 
+// SOLUTION LINK : https://leetcode.com/problems/count-subarrays-where-max-element-appears-at-least-k-times/solutions/6697524/beats-space-o1-super-easy-beginners-java-49e2/
 class Solution {
   int countSubarrays(List<int> nums, int k) {
     int maxElement = 0;
