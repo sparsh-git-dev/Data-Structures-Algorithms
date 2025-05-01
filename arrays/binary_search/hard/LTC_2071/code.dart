@@ -1,6 +1,17 @@
 import 'dart:collection';
 import 'dart:math';
 
+// Problem: https://leetcode.com/problems/maximum-number-of-tasks-you-can-assign/
+// Approach: Binary Search + Greedy + SplayTreeMap
+
+void main() {
+  List<int> tasks = [10, 15, 30];
+  List<int> workers = [0, 10, 10, 10, 10];
+  int pills = 3;
+  int strength = 10;
+  maxTaskAssign(tasks, workers, pills, strength);
+}
+
 int maxTaskAssign(List<int> tasks, List<int> workers, int pills, int strength) {
   tasks.sort();
   workers.sort();
