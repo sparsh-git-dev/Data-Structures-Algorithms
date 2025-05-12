@@ -1,0 +1,14 @@
+name: dsa
+description: A simple command-line application.
+version: 1.0.0
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  collection: ^1.17.2
+  
+
+dev_dependencies:
+  lints: ^3.0.0
+  test: ^1.24.0
