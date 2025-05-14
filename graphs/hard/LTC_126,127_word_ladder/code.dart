@@ -1,15 +1,11 @@
+// https://leetcode.com/problems/word-ladder/description/
+
 import 'dart:collection';
-import 'dart:convert';
-import 'dart:math';
 
-void main() {
-  minMutation("AACCGGTT", "AAACGGTA", ["AACCGGTA", "AACCGCTA", "AAACGGTA"]);
-}
-
-int minMutation(String beginWord, String endWord, List<String> wordList) {
+int ladderLength(String beginWord, String endWord, List<String> wordList) {
   int level = 1; // start at level 1 because beginWord is counted
   Set<String> wordsSet = wordList.toSet();
-  if (!wordsSet.contains(endWord)) return -1;
+  if (!wordsSet.contains(endWord)) return 0;
 
   Queue<String> q = Queue();
   q.add(beginWord);
@@ -34,10 +30,12 @@ int minMutation(String beginWord, String endWord, List<String> wordList) {
 
 List<String> getNeighbours(String word, Set<String> wordsSet) {
   List<String> result = [];
-  List<String> allowed = ['A', 'C', 'G', 'T'];
+  int a = 'a'.codeUnitAt(0);
   for (int i = 0; i < word.length; i++) {
-    for (String s in allowed) {
-      String newWord = word.substring(0, i) + s + word.substring(i + 1);
+    for (int alpha = 0; alpha < 26; alpha++) {
+      String replaceWith = String.fromCharCode(alpha + a);
+      String newWord =
+          word.substring(0, i) + replaceWith + word.substring(i + 1);
       if (wordsSet.contains(newWord)) {
         wordsSet.remove(newWord);
         result.add(newWord);
