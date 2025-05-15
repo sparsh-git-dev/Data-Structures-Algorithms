@@ -1,24 +1,11 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:math';
-
-void main() {
-  myPow(2, 10);
-}
-
 double myPow(double x, int n) {
   if (n == 0) return 1.0;
 
   double result = 1.0;
   int exponent = n.abs();
-  if (exponent %2== 1) {
-    result = x;
-    exponent--;
-  }
 
   while (exponent > 0) {
-    if (exponent == 1) result *= x;
-
+    if (exponent & 1 == 1) result *= x;
     x *= x;
     exponent = exponent ~/ 2;
   }
