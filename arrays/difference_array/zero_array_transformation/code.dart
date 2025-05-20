@@ -1,8 +1,6 @@
-import 'dart:collection';
-import 'dart:convert';
-import 'dart:math';
+// Part 1
 
-void main() {}
+import 'dart:math';
 
 bool isZeroArray(List<int> nums, List<List<int>> queries) {
   int n = nums.length;
@@ -21,8 +19,17 @@ bool isZeroArray(List<int> nums, List<List<int>> queries) {
     newDelta[i] = newDelta[i - 1] + delta[i];
   }
 
+  List<int> transformedNums = List.from(nums);
   for (int i = 0; i < n; i++) {
-    if (newDelta != 0) return false;
+    int subtract = nums[i] - newDelta[i];
+    transformedNums[i] = max(0, subtract);
+  }
+
+  print(newDelta);
+  print(transformedNums);
+
+  for (int t in transformedNums) {
+    if (t != 0) return false;
   }
 
   return true;
