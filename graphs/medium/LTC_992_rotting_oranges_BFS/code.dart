@@ -1,14 +1,4 @@
 import 'dart:collection';
-import 'dart:convert';
-import 'dart:math';
-
-void main() {
-  orangesRotting([
-    [2, 1, 1],
-    [1, 1, 0],
-    [0, 1, 1]
-  ]);
-}
 
 int orangesRotting(List<List<int>> grid) {
   int minutes = 0;
@@ -16,6 +6,7 @@ int orangesRotting(List<List<int>> grid) {
   int fresh = 0;
   int m = grid.length;
   int n = grid[0].length;
+  int rotten = 0;
 
   for (int i = 0; i < grid.length; i++) {
     for (int j = 0; j < grid[0].length; j++) {
@@ -23,8 +14,9 @@ int orangesRotting(List<List<int>> grid) {
       if (grid[i][j] == 1) fresh++;
     }
   }
-
-  while (q.isNotEmpty) {
+  rotten = q.length;
+  if (rotten == 0 && fresh == 0) return 0;
+  while (q.isNotEmpty && fresh > 0) {
     int size = q.length;
     for (int i = 0; i < size; i++) {
       List<int> cell = q.removeFirst();
