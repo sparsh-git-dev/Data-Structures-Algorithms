@@ -1,0 +1,1 @@
+![alt text](<stones removed.png>)
