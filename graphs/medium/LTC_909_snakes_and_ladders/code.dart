@@ -1,10 +1,14 @@
 import 'dart:collection/collection.dart';
 
 List<int> getCoord(int num, int n) {
-  int row = n - 1 - ((num - 1) ~/ n);
-  int col = (num - 1) % n;
+  int baseRow = (num - 1) ~/ n; // Row if numbered from top
+  int row = n - 1 - baseRow; // Convert to bottom-up row
+  int col = (num - 1) % n; // Column index
 
-  if ((n % 2 == 1 && row % 2 == 1) || (n % 2 == 0 && row % 2 == 0)) {
+  // Apply zigzag column flip based on row direction
+  bool isRightToLeft =
+      (n % 2 == 1 && row % 2 == 1) || (n % 2 == 0 && row % 2 == 0);
+  if (isRightToLeft) {
     col = n - 1 - col;
   }
 
