@@ -1,58 +1,32 @@
 import 'dart:collection';
-import 'dart:convert';
 import 'dart:math';
 
-void main() {
-  orangesRotting([
-    [2, 1, 1],
-    [1, 1, 0],
-    [0, 1, 1]
-  ]);
-}
+import 'package:collection/collection.dart';
 
-int orangesRotting(List<List<int>> grid) {
-  int minutes = 0;
-  Queue<List<int>> q = Queue();
-  int fresh = 0;
-  int m = grid.length;
-  int n = grid[0].length;
+void main() {}
 
-  for (int i = 0; i < grid.length; i++) {
-    for (int j = 0; j < grid[0].length; j++) {
-      if (grid[i][j] == 2) q.add([i, j]);
-      if (grid[i][j] == 1) fresh++;
+int minimizeMax(List<int> nums, int p) {
+  if (p == 0) return p;
+  nums.sort();
+  int res = nums.last - nums.first;
+  int l = nums.first;
+  int r = res;
+  while (l <= r) {
+    int mid = l + (r - l) ~/ 2;
+    if (isPairPossible(nums, mid, p)) {
+      res = mid;
+      r = mid - 1;
+    } else {
+      l = mid + 1;
     }
   }
-
-  while (q.isNotEmpty) {
-    int size = q.length;
-    for (int i = 0; i < size; i++) {
-      List<int> cell = q.removeFirst();
-      int x = cell[0];
-      int y = cell[1];
-      for (List<int> d in directions) {
-        int newX = x + d[0];
-        int newY = y + d[1];
-        if (newX >= 0 &&
-            newX < m &&
-            newY >= 0 &&
-            newY < n &&
-            grid[newX][newY] == 1) {
-          q.add([newX, newY]);
-          fresh--;
-          grid[newX][newY] = 2;
-        }
-      }
-    }
-    minutes++;
-  }
-
-  return fresh == 0 ? minutes : -1;
+  return res;
 }
 
-List<List<int>> directions = [
-  [-1, 0],
-  [0, 1],
-  [1, 0],
-  [0, -1]
-];
+bool isPairPossible(List<int> nums, int target, int pair) {
+  int pairsFound = 0;
+  for (int i = 1; i < nums.length; i++) {
+    if ((nums[i] - nums[i - 1]).abs() <= target) pairsFound++;
+  }
+  return pairsFound == pair;
+}
