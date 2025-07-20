@@ -6,6 +6,15 @@ import '../../annotations.dart';
 // 1353
 @Greedy()
 @heap()
+void main() {
+  maxEvents([
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [1, 2]
+  ]);
+}
+
 int maxEvents(List<List<int>> events) {
   int n = events.length;
   PriorityQueue<int> pq = PriorityQueue<int>();
