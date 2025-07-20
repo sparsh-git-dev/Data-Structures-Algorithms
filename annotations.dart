@@ -9,3 +9,7 @@ class BackTracking {
 class SubSequence {
   const SubSequence();
 }
+
+class heap {
+  const heap();
+}
