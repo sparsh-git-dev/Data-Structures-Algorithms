@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 
-import '../../annotations.dart';
+import '../../../annotations.dart';
 
 //https://leetcode.com/problems/maximum-number-of-events-that-can-be-attended/description/
 // 1353
