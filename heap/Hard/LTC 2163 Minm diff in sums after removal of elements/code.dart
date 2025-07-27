@@ -10,7 +10,7 @@ void main() {
     print('object');
   }
 
-  for(int i =0 ; i < 5 v; i++){
+  for(int i =0 ; i < 5 ; i++){
     if( i < 2 ){
       print("22");
     }
