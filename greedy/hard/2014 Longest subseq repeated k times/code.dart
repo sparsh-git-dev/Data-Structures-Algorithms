@@ -1,4 +1,4 @@
-import '../../../../annotations.dart';
+import '../../../annotations.dart';
 
 @Greedy()
 @SubSequence()
