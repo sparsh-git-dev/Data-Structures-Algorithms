@@ -13,3 +13,11 @@ class SubSequence {
 class heap {
   const heap();
 }
+
+class Events {
+  const Events();
+}
+
+class SlidingWindow {
+  const SlidingWindow();
+}
