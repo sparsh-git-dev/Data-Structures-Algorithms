@@ -21,3 +21,7 @@ class Events {
 class SlidingWindow {
   const SlidingWindow();
 }
+
+class dynamicProgramming {
+  const dynamicProgramming();
+}
