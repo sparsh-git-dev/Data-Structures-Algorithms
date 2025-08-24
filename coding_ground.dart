@@ -4,21 +4,45 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 void main() {
-  countHillValley([2, 4, 1, 1, 6, 5]);
+  final a = [1, 1, 0, 0, 1, 1, 1, 0, 1];
+  longestSubarray(a);
 }
 
-int countHillValley(List<int> nums) {
-  int ans = 0;
+int longestSubarray(List<int> nums) {
   int left = 0;
-  int right = 2;
-  int size = nums.length;
-  for (int i = 1; i < size - 1; i++) {
-    while (left < i && nums[left] == nums[i]) left++;
-    if (nums[left] == nums[i]) continue;
-    while (right < size && nums[right] == nums[i]) right++;
-    if (nums[right] == nums[i]) continue;
-    ans++;
-    if (right == i) right += 2;
+  int right = 0;
+  int ans = 0;
+  bool flag = false;
+  bool zeroEverFound = false;
+  for (int i = 0; i < nums.length; i++) {
+    int n = nums[i];
+    if (n == 0 && left == 0) continue;
+    bool validBreakPoint = n == 0;
+    if (i + 1 < nums.length && n==0) {
+      bool didBreak = n == 0 && nums[i + 1] == 1;
+      if (didBreak) {
+        validBreakPoint = true;
+      } else {
+        ans = max(ans, left + right);
+        left = 0;
+        right = 0;
+      }
+    }
+    if (validBreakPoint) {
+      zeroEverFound = true;
+      if (flag == true) {
+        ans = max(ans, left + right);
+        left = right;
+        right = 0;
+      } else {
+        flag = true;
+      }
+    }
+    if (flag == false && n == 1) left++;
+    if (flag == true && n == 1) right++;
   }
+
+  ans = max(ans, left + right);
+  if (zeroEverFound == false) ans--;
   return ans;
 }
