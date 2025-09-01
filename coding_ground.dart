@@ -6,6 +6,9 @@ import 'package:collection/collection.dart';
 void main() {
   final a = [1, 1, 0, 0, 1, 1, 1, 0, 1];
   longestSubarray(a);
+  int n = 10;
+  int m = 12;
+  ((m / 2).ceil() * (n / 2).floor()) + ((m / 2).floor() * (n / 2).ceil());
 }
 
 int longestSubarray(List<int> nums) {
@@ -18,7 +21,7 @@ int longestSubarray(List<int> nums) {
     int n = nums[i];
     if (n == 0 && left == 0) continue;
     bool validBreakPoint = n == 0;
-    if (i + 1 < nums.length && n==0) {
+    if (i + 1 < nums.length && n == 0) {
       bool didBreak = n == 0 && nums[i + 1] == 1;
       if (didBreak) {
         validBreakPoint = true;
