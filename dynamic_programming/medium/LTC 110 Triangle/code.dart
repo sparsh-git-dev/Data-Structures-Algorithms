@@ -1,6 +1,7 @@
 import 'dart:math';
-// 2-D array
-int minimumTotal(List<List<int>> triangle) {
+
+//2D
+int TwoDMinimumTotal(List<List<int>> triangle) {
   int n = triangle.length;
 
   List<List<int>> dp = [];
@@ -15,4 +16,16 @@ int minimumTotal(List<List<int>> triangle) {
     }
   }
   return dp[0][0];
+}
+
+int minimumTotal(List<List<int>> triangle) {
+  int n = triangle.length;
+
+  List<int> dp = triangle.last;
+  for (int row = n - 2; row >= 0; row--) {
+    for (int col = 0; col <= row; col++) {
+      dp[col] = triangle[row][col] + min(dp[col], dp[col + 1]);
+    }
+  }
+  return dp[0];
 }
