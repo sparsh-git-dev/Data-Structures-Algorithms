@@ -29,7 +29,7 @@ int trapRainWater(List<List<int>> heightMap) {
   ];
   while (pq.isNotEmpty) {
     List<int> val = pq.removeFirst();
-    int height = val[0];
+    int currentHeight = val[0];
     int x = val[1];
     int y = val[2];
     for (List<int> dir in directions) {
@@ -39,10 +39,10 @@ int trapRainWater(List<List<int>> heightMap) {
       if (nx >= 0 && nx < m && ny >= 0 && ny < n && !visited[nx][ny]) {
         visited[nx][ny] = true;
         int neighborHeight = heightMap[nx][ny];
-        if (neighborHeight < height) {
-          waterTrapped += height - neighborHeight;
+        if (neighborHeight < currentHeight) {
+          waterTrapped += currentHeight - neighborHeight;
         }
-        pq.add([max(neighborHeight, height), nx, ny]);
+        pq.add([max(neighborHeight, currentHeight), nx, ny]);
       }
     }
   }
