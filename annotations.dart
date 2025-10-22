@@ -25,3 +25,7 @@ class SlidingWindow {
 class dynamicProgramming {
   const dynamicProgramming();
 }
+
+class DFS {
+  const DFS();
+}
