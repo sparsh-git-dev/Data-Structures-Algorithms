@@ -33,3 +33,12 @@ class ClassicDynamicProgramming {
 class DFS {
   const DFS();
 }
+
+class BinarySearch {
+  const BinarySearch();
+}
+
+/// DP + Binary Search
+class DeleteAndEarnDP {
+  const DeleteAndEarnDP();
+}

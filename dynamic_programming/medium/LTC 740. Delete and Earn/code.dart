@@ -2,6 +2,11 @@
 
 import 'dart:math';
 
+import '../../../annotations.dart';
+
+@DeleteAndEarnDP()
+@BinarySearch()
+@dynamicProgramming()
 int deleteAndEarn(List<int> nums) {
   int result = -1;
   Map<int, int> freq = {};
