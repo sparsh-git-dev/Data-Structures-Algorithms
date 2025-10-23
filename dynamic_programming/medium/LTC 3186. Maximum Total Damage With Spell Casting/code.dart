@@ -1,7 +1,11 @@
 // https://leetcode.com/problems/maximum-total-damage-with-spell-casting/description/?envType=daily-question&envId=2025-10-11
 
 import 'dart:math';
+import '../../../annotations.dart';
 
+@DeleteAndEarnDP()
+@BinarySearch()
+@dynamicProgramming()
 int maximumTotalDamage(List<int> power) {
   Map<int, int> freq = {};
   for (int p in power) freq[p] = (freq[p] ?? 0) + 1;
