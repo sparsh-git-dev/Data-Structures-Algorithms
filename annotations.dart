@@ -26,6 +26,10 @@ class dynamicProgramming {
   const dynamicProgramming();
 }
 
+class ClassicDynamicProgramming {
+  const ClassicDynamicProgramming();
+}
+
 class DFS {
   const DFS();
 }
