@@ -2,35 +2,43 @@ import 'dart:math';
 
 import 'graphs/medium/LTC_399_evaluate_division/code.dart';
 
-void main() {}
-List<int> successfulPairs(List<int> spells, List<int> potions, int success) {
-  List<int> ans = [];
-  potions.sort();
-  for (int s in spells) {
-    int idx = leftBound(potions, s, success);
-    if (idx == -1) {
-      ans.add(0);
-    } else {
-      ans.add(potions.length - idx);
-    }
-  }
-
-  return ans;
+void main() {
+  final a = [-15, -13, 4, 7];
+  // maxIncreasingSubarrays(a);
 }
 
-int leftBound(List<int> arr, int spell, int target) {
-  int ans = -1;
-  int l = 0;
-  int r = arr.length - 1;
-  while (r >= l) {
-    int mid = l + (r - l) ~/ 2;
-    int value = arr[mid] * spell;
-    if (value >= target) {
-      r = mid - l;
-      ans = mid;
-    } else {
-      l = mid + 1;
-    }
+class Bank {
+  List<int> _balance = [];
+
+  Bank(List<int> balance) {
+    this._balance = balance;
   }
-  return ans;
+
+  bool transfer(int account1, int account2, int money) {
+    account1--;
+    account2--;
+    if (_balance[account1] < money) return false;
+    _balance[account1] = _balance[account1] - money;
+    _balance[account2] = _balance[account2] + money;
+    return true;
+  }
+
+  bool deposit(int account, int money) {
+    _balance[account - 1] = _balance[account - 1] + money;
+    return true;
+  }
+
+  bool withdraw(int account, int money) {
+    if (_balance[account - 1] < money) return false;
+    _balance[account - 1] = _balance[account - 1] - money;
+    return true;
+  }
 }
+
+/**
+ * Your Bank object will be instantiated and called as such:
+ * Bank obj = Bank(balance);
+ * bool param1 = obj.transfer(account1,account2,money);
+ * bool param2 = obj.deposit(account,money);
+ * bool param3 = obj.withdraw(account,money);
+ */
