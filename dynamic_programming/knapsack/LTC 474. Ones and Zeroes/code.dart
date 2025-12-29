@@ -21,16 +21,10 @@ int findMaxForm(List<String> strs, int m, int n) {
     // Loop backward to ensure each string is used at most once
     for (int i = m; i >= zeroCount; i--) {
       for (int j = n; j >= oneCount; j--) {
-        print('before : [i][j] : dp[$i][$j] = ${[
-          dp[i][j]
-        ]} & dp[$i - ${zeroCount}][$j - ${oneCount}] is ${dp[i - zeroCount][j - oneCount]}');
         dp[i][j] = max(
           dp[i][j],
           dp[i - zeroCount][j - oneCount] + 1,
         );
-        print('After : [i][j] : dp[$i][$j] = ${[
-          dp[i][j]
-        ]} & dp[$i - ${zeroCount}][$j - ${oneCount}] is ${dp[i - zeroCount][j - oneCount]}');
       }
     }
   }
@@ -53,5 +47,6 @@ int zeroCounts(String s) {
   for (int i = 0; i < s.length; i++) {
     if (s[i] == '0') count++;
   }
+
   return count;
 }
