@@ -5,7 +5,7 @@ import '../helpers/tree_node.dart';
 TreeNode? balanceBST(TreeNode? root) {
   List<int> sortedList = [];
   Inorder(root, sortedList);
-  return sortedListToBST(sortedList,0,sortedList.length -1);
+  return sortedListToBST(sortedList, 0, sortedList.length - 1);
 }
 
 void Inorder(TreeNode? root, List<int> sortedList) {

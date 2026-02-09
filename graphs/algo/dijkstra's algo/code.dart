@@ -1,12 +1,12 @@
 import 'package:collection/collection.dart';
 
-
 List<int> dijkstra(int n, List<List<List<int>>> adj, int start) {
   List<int> dist = List.filled(n, double.infinity.toInt());
   dist[start] = 0;
 
   // Min-heap: [distance, node]
-  final priorityQueue = PriorityQueue<List<int>>((a, b) => a[0].compareTo(b[0]));
+  final priorityQueue =
+      PriorityQueue<List<int>>((a, b) => a[0].compareTo(b[0]));
   priorityQueue.add([0, start]);
 
   while (priorityQueue.isNotEmpty) {

@@ -29,7 +29,7 @@ int minCost(List<int> basket1, List<int> basket2) {
   swappables.sort();
 
   for (int i = 0; i < swappables.length ~/ 2; i++) {
-    ans += min(swappables[i], 2 * minEl )   ;
+    ans += min(swappables[i], 2 * minEl);
   }
   return ans;
 }

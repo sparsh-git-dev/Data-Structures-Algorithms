@@ -16,7 +16,7 @@ int triangleNumber(List<int> sides) {
       // Check if smallest + middle > largest
       if (sides[left] + sides[right] > sides[longest]) {
         // All pairs between left..right-1 with right also form valid triangles
-        totalTriangles += (right  - left);
+        totalTriangles += (right - left);
         right--; // try smaller middle side
       } else {
         left++; // increase smallest side

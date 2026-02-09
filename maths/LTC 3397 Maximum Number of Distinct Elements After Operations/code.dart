@@ -13,7 +13,7 @@ class Solution {
         // Choose nums[i] - k
         prev = minVal;
         count++;
-      } else if (prev  + 1 <= nums[i] + k) {
+      } else if (prev + 1 <= nums[i] + k) {
         // Choose next available distinct value greater than prev
         prev = prev + 1;
         count++;

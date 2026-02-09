@@ -25,7 +25,7 @@ List<int> nse(List<int> arr) {
 }
 
 void main() {
-  final List<int> arr = [4, 5 ,2, 8, 10];
+  final List<int> arr = [4, 5, 2, 8, 10];
   print(nse(arr));
   print(nge(arr));
 }

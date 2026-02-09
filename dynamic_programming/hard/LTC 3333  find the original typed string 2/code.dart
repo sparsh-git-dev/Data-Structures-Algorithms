@@ -96,4 +96,3 @@ class SolutionBottomUP {
     return (P - invalidCount + M) % M;
   }
 }
-

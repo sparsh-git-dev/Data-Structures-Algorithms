@@ -1,5 +1,6 @@
 import 'height_of_the_tree.dart';
 import 'tree_node.dart';
+
 // https://leetcode.com/problems/balanced-binary-tree/description/?envType=daily-question&envId=2026-02-08
 bool isBalanced(TreeNode? root) {
   if (root == null) return true;

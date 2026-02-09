@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 void main() {
-  final a = [1,2,2];
+  final a = [1, 2, 2];
   int p = minimumPairRemoval(a);
   print(p);
 }

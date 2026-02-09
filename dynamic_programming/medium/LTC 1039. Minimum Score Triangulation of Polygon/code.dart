@@ -10,7 +10,7 @@ int minScoreTriangulation(List<int> values) {
 
     int ans = 1e9.toInt();
     for (int k = i + 1; k < j; k++) {
-      int score = solve(i, k) + values[i] * values[j] * values[k] +solve(k, j);
+      int score = solve(i, k) + values[i] * values[j] * values[k] + solve(k, j);
       ans = min(score, ans);
     }
     return memo[i][j] = ans;
@@ -18,4 +18,3 @@ int minScoreTriangulation(List<int> values) {
 
   return solve(0, n - 1);
 }
- 

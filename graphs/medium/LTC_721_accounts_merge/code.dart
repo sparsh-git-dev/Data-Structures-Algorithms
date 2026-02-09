@@ -1,4 +1,3 @@
-
 List<List<String>> accountsMerge(List<List<String>> accounts) {
   List<List<String>> result = [];
   Map<String, List<String>> adjMap = {};
@@ -18,7 +17,7 @@ List<List<String>> accountsMerge(List<List<String>> accounts) {
 
     if (account.length == 2) seperateCompoment[account[0]] = account[1];
   }
-  
+
   Set<String> visisted = {};
   for (List<String> account in accounts) {
     String name = account[0];
