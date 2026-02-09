@@ -1,10 +1,16 @@
-import '../height_of_the_tree.dart';
-import '../tree_node.dart';
+import '../helpers/height_of_the_tree.dart';
+import '../helpers/list_to_bst.dart';
+import '../helpers/tree_node.dart';
 
-bool isBalanced(TreeNode? root) {
-  if (root == null) return true;
-  int leftH = heightOfTheTree(root.left);
-  int rightH = heightOfTheTree(root.right);
-  if ((leftH - rightH).abs() > 1) return false;
-  return isBalanced(root.left) && isBalanced(root.right);
+TreeNode? balanceBST(TreeNode? root) {
+  List<int> sortedList = [];
+  Inorder(root, sortedList);
+  return sortedListToBST(sortedList,0,sortedList.length -1);
+}
+
+void Inorder(TreeNode? root, List<int> sortedList) {
+  if (root == null) return;
+  Inorder(root.left, sortedList);
+  sortedList.add(root.val);
+  Inorder(root.right, sortedList);
 }
