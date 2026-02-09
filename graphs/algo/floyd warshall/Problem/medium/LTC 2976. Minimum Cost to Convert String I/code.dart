@@ -7,6 +7,7 @@ int minimumCost(String source, String target, List<String> original,
   int INF = 1e9.toInt();
   List<List<int>> dis = List.generate(26, (_) => List.filled(26, INF));
 
+  // Diagonals
   for (int i = 0; i < 26; i++) dis[i][i] = 0;
   int aCode = 'a'.codeUnitAt(0);
 
