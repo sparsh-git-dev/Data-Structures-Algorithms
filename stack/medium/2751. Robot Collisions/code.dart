@@ -1,57 +1,57 @@
 ///https://leetcode.com/problems/robot-collisions/
 
-class Solution {
-  List<int> survivedRobotsHealths(List<int> positions, List<int> healths, String directions) {
-    int n = positions.length;
-    List<int> survivors = [];
-    List<int> survivorIndexes = [];
-    
-    // Create a list of tuples (position, health, direction, index)
-    List<List<dynamic>> robots = [];
-    for (int i = 0; i < n; i++) {
-      robots.add([positions[i], healths[i], directions[i], i]);
-    }
-    
-    // Sort the robots by their positions
-    robots.sort((a, b) => a[0].compareTo(b[0]));
-    
-    // Use a stack to process the collisions
-    List<List<dynamic>> stack = [];
-    
-    for (var robot in robots) {
-      if (robot[2] == 'R') {
-        stack.add(robot); // push the robot moving right to the stack
-      } else {
-        // Process collisions
-        while (stack.isNotEmpty && stack.last[2] == 'R' && stack.last[1] < robot[1]) {
-          var collidedRobot = stack.removeLast();
-          robot[1] -= 1; // reduce health of current left-moving robot
-        }
-        if (stack.isNotEmpty && stack.last[2] == 'R') {
-          if (stack.last[1] == robot[1]) {
-            stack.removeLast(); // both robots are destroyed
-          } else {
-            stack.last[1] -= 1; // reduce health of the right-moving robot
-          }
+class Robot {
+  int position;
+  int health;
+  String direction;
+  int originalIndex;
+
+  Robot(this.position, this.health, this.direction, this.originalIndex);
+}
+
+List<int> survivedRobotsHealths(
+    List<int> positions, List<int> healths, String directions) {
+  int n = positions.length;
+  // Step 1: Create robot objects
+  List<Robot> robots = [];
+  for (int i = 0; i < n; i++) {
+    robots.add(Robot(positions[i], healths[i], directions[i], i));
+  }
+  // Step 2: Sort by position
+  robots.sort((a, b) => a.position.compareTo(b.position));
+  // Stack for right-moving robots
+  List<Robot> rightStack = [];
+  // List to store surviving robots
+  List<Robot> survivors = [];
+  // Step 3: Process each robot
+  for (Robot current in robots) {
+    if (current.direction == 'R') {
+      rightStack.add(current);
+    } else {
+      // Handle collisions with right-moving robots
+      while (rightStack.isNotEmpty && current.health > 0) {
+        Robot top = rightStack.removeLast();
+        if (top.health > current.health) {
+          top.health--;
+          rightStack.add(top);
+          current.health = 0;
+        } else if (top.health < current.health) {
+          current.health--;
         } else {
-          survivors.add(robot[1]); // current robot survived
-          survivorIndexes.add(robot[3]); // keep the original index
+          // Both destroyed
+          current.health = 0;
         }
       }
+      // If current (L) survives
+      if (current.health > 0) {
+        survivors.add(current);
+      }
     }
-    
-    // Add remaining right-moving robots to survivors
-    for (var robot in stack) {
-      survivors.add(robot[1]);
-      survivorIndexes.add(robot[3]);
-    }
-    
-    // Sort the survivors by their original indexes
-    List<int> result = List.filled(n, 0);
-    for (int i = 0; i < survivors.length; i++) {
-      result[survivorIndexes[i]] = survivors[i];
-    }
-    
-    return result.where((health) => health != 0).toList();
   }
+  // Add remaining right-moving robots
+  survivors.addAll(rightStack);
+  // Step 4: Sort by original index
+  survivors.sort((a, b) => a.originalIndex.compareTo(b.originalIndex));
+  // Step 5: Extract healths
+  return survivors.map((robot) => robot.health).toList();
 }
