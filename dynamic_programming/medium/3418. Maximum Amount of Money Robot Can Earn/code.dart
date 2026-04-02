@@ -4,6 +4,8 @@ import 'dart:math';
 ///
 ///
 
+
+// Visited Array is not required coz we are moveing R and D,
 int maximumAmountDFS(List<List<int>> coins) {
   int ans = -10000000;
   int r = coins.length, c = coins[0].length;
