@@ -30,7 +30,7 @@ class Solution {
   }
 
   int findMinDistance(List<int> idxs, int initialIdx, int n) {
-    int foundIdx = idxs.indexOf(initialIdx);
+    int foundIdx = findPosition(idxs,initialIdx);
 
     // Previous same-value index (circular)
     int prevIdx = idxs[(foundIdx - 1) % idxs.length];
@@ -48,5 +48,24 @@ class Solution {
   int circularDistance(int a, int b, int n) {
     int diff = (a - b).abs();
     return min(diff, (n - diff));
+  }
+
+  int findPosition(List<int> arr, int target) {
+    int left = 0;
+    int right = arr.length - 1;
+
+    while (left <= right) {
+      int mid = left + (right - left) ~/ 2;
+
+      if (arr[mid] == target) return mid;
+
+      if (arr[mid] < target) {
+        left = mid + 1;
+      } else {
+        right = mid - 1;
+      }
+    }
+
+    return -1; // won't happen here
   }
 }
