@@ -2,67 +2,52 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 
+import 'Linked_list/linked_list.dart';
+
 void main() {
   final a = [1, 2, 2];
-  int p = minimumPairRemoval(a);
-  print(p);
+  final boxGrid = [
+    ["#", ".", "#"]
+  ];
+  // [
+  //   ["#", ".", "*", "."],
+  //   ["#", "#", "*", "."]
+  // ];
+  print(rotateTheBox(boxGrid));
 }
 
-int minimumPairRemoval(List<int> nums) {
-  int ans = 0;
-  bool flag = true;
+List<List<String>> rotateTheBox(List<List<String>> box) {
+  int r = box.length, c = box[0].length;
+  List<List<String>> rotated = List.generate(c, (_) => List.filled(r, ''));
 
-  while (flag) {
-    flag = false;
-    int size = nums.length;
-    if (size == 2) return nums[0] < nums[1] ? ans : ++ans;
-    for (int i = 1; i < size; i++) {
-      if (nums[i - 1] <= nums[i]) continue;
-      int newNum = nums[i] + nums[i + 1];
-      nums = List.from([
-        ...nums.sublist(0, i),
-        newNum,
-        if (nums.length > i + 2) ...nums.sublist(i + 2)
-      ]);
-      flag = true;
-      ans++;
-      break;
+  for (int j = 0; j < rotated[0].length; j++) {
+    int row = r - 1 - j;
+    for (int i = 0; i < rotated.length; i++) {
+      rotated[i][j] = box[row][i];
     }
-    if (nums.length > 2) {
-      int s = nums.length;
-      if (nums[s - 1] < nums[s - 2]) {
-        ans++;
-        flag = true;
-        print(nums);
-        nums[s - 2] = nums[s - 2] + nums[s - 1];
-        nums.removeAt(s - 1);
+  }
+
+  for (int j = 0; j < rotated[0].length; j++) {
+    int count = 0;
+    for (int i = 0; i < rotated.length; i++) {
+      if (rotated[i][j] == "#") {
+        rotated[i][j] == ".";
+        count++;
+      } else if (rotated[i][j] == "*") {
+        if (count == 0) continue;
+        for (int l = 1; l <= count; l++) {
+          rotated[i - l][j] = "#";
+        }
+        count = 0;
+      }
+    }
+    if (count > 0) {
+      int row = rotated.length - 1;
+      for (int l = 0; l < count; l++) {
+        rotated[row - l][j] = "#";
       }
     }
   }
 
-  return ans;
-}
-
-int search(List<int> nums, int target) {
-  int s = 0, e = nums.length - 1;
-
-  while (s <= e) {
-    int m = (s + e) ~/ 2;
-    if (nums[m] == target) return m;
-    if (nums[s] < nums[m]) {
-      if (nums[s] < target && target < nums[m]) {
-        e = m - 1;
-      } else {
-        s = m + 1;
-      }
-    } else {
-      if (nums[m] < target && target < nums[e]) {
-        s = m + 1;
-      } else {
-        e = m - 1;
-      }
-    }
-  }
-
-  return -1;
+  return rotated;
 }
