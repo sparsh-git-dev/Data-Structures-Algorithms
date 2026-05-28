@@ -5,49 +5,51 @@ import 'package:collection/collection.dart';
 import 'Linked_list/linked_list.dart';
 
 void main() {
-  final a = [1, 2, 2];
-  final boxGrid = [
-    ["#", ".", "#"]
+  final a = [
+    [1, 3],
+    [2, 4],
+    [10, 11],
+    [10, 12],
+    [8, 9]
   ];
-  // [
-  //   ["#", ".", "*", "."],
-  //   ["#", "#", "*", "."]
-  // ];
-  print(rotateTheBox(boxGrid));
+  minimumEffort(a);
 }
 
-List<List<String>> rotateTheBox(List<List<String>> box) {
-  int r = box.length, c = box[0].length;
-  List<List<String>> rotated = List.generate(c, (_) => List.filled(r, ''));
+int minimumEffort(List<List<int>> tasks) {
+  int ans = 1e9.toInt();
 
-  for (int j = 0; j < rotated[0].length; j++) {
-    int row = r - 1 - j;
-    for (int i = 0; i < rotated.length; i++) {
-      rotated[i][j] = box[row][i];
-    }
+  tasks.sort((a, b) {
+    return b[1].compareTo(a[1]);
+  });
+  int minmFuel = 0;
+  int maxmFuel = 0;
+
+  for (List<int> task in tasks) {
+    minmFuel += task[0];
+    maxmFuel = max(maxmFuel, task[1]);
   }
 
-  for (int j = 0; j < rotated[0].length; j++) {
-    int count = 0;
-    for (int i = 0; i < rotated.length; i++) {
-      if (rotated[i][j] == "#") {
-        rotated[i][j] == ".";
-        count++;
-      } else if (rotated[i][j] == "*") {
-        if (count == 0) continue;
-        for (int l = 1; l <= count; l++) {
-          rotated[i - l][j] = "#";
-        }
-        count = 0;
-      }
-    }
-    if (count > 0) {
-      int row = rotated.length - 1;
-      for (int l = 0; l < count; l++) {
-        rotated[row - l][j] = "#";
-      }
-    }
+  int s = minmFuel, e = minmFuel + maxmFuel;
+  if(ableToCover(tasks,32)){
+    print('object');
   }
+  // while (s <= e) {
+  //   int m = (s + e) ~/ 2;
+  //   if (ableToCover(tasks, m)) {
+  //     ans = min(m, ans);
+  //     e = m - 1;
+  //   } else {
+  //     s = m + 1;
+  //   }
+  // }
 
-  return rotated;
+  return ans;
+}
+
+bool ableToCover(List<List<int>> tasks, int fuel) {
+  for (List<int> t in tasks) {
+    if (fuel < t[1] || fuel <= 0) return false;
+    fuel = fuel - t[0];
+  }
+  return true;
 }
