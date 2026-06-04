@@ -5,51 +5,38 @@ import 'package:collection/collection.dart';
 import 'Linked_list/linked_list.dart';
 
 void main() {
-  final a = [
-    [1, 3],
-    [2, 4],
-    [10, 11],
-    [10, 12],
-    [8, 9]
-  ];
-  minimumEffort(a);
+  asteroidsDestroyed(5, [4, 9, 23, 4]);
 }
 
-int minimumEffort(List<List<int>> tasks) {
-  int ans = 1e9.toInt();
+bool asteroidsDestroyed(int mass, List<int> asteroids) {
+  asteroids.sort();
+  int n = asteroids.length;
+  int s = 0, e = n - 1;
+  int ans = -1;
+  int destroyed = 0;
+  while (s <= e) {
+    int m = (s + e) >> 1;
 
-  tasks.sort((a, b) {
-    return b[1].compareTo(a[1]);
-  });
-  int minmFuel = 0;
-  int maxmFuel = 0;
+    if (mass >= m) {
+      ans = m;
+      s = m + 1;
+    } else {
+      e = m - 1;
+    }
+  }
+  print(ans);
+  if (ans == -1) return false;
 
-  for (List<int> task in tasks) {
-    minmFuel += task[0];
-    maxmFuel = max(maxmFuel, task[1]);
+  for (int i = ans; i >= 0; i--) {
+    mass += asteroids[i];
+    destroyed++;
+  }
+  for (int i = ans + 1; i < n; i++) {
+    if (mass >= asteroids[i]) {
+      mass += asteroids[i];
+      destroyed++;
+    }
   }
 
-  int s = minmFuel, e = minmFuel + maxmFuel;
-  if(ableToCover(tasks,32)){
-    print('object');
-  }
-  // while (s <= e) {
-  //   int m = (s + e) ~/ 2;
-  //   if (ableToCover(tasks, m)) {
-  //     ans = min(m, ans);
-  //     e = m - 1;
-  //   } else {
-  //     s = m + 1;
-  //   }
-  // }
-
-  return ans;
-}
-
-bool ableToCover(List<List<int>> tasks, int fuel) {
-  for (List<int> t in tasks) {
-    if (fuel < t[1] || fuel <= 0) return false;
-    fuel = fuel - t[0];
-  }
-  return true;
+  return destroyed == n;
 }

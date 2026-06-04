@@ -1,16 +1,13 @@
 import 'dart:math';
 
 class SegmentTree {
-  late List<int> tree;
-  late List<int> arr;
+  late List<int> tree, arr;
   late int n;
 
   SegmentTree(List<int> nums) {
     arr = List.from(nums);
     n = arr.length;
-
     tree = List.filled(4 * n, 0);
-
     build(0, 0, n - 1);
   }
 
@@ -19,15 +16,10 @@ class SegmentTree {
       tree[node] = arr[start];
       return;
     }
-
     int mid = (start + end) ~/ 2;
-
-    int left = 2 * node + 1;
-    int right = 2 * node + 2;
-
+    int left = 2 * node + 1, right = 2 * node + 2;
     build(left, start, mid);
     build(right, mid + 1, end);
-
     tree[node] = max(tree[left], tree[right]);
   }
 
@@ -43,15 +35,12 @@ class SegmentTree {
     }
 
     int mid = (start + end) ~/ 2;
+    int left = 2 * node + 1, right = 2 * node + 2;
 
-    int left = 2 * node + 1;
-    int right = 2 * node + 2;
-
-    if (index <= mid) {
+    if (index <= mid)
       _update(left, start, mid, index, value);
-    } else {
+    else
       _update(right, mid + 1, end, index, value);
-    }
 
     tree[node] = max(tree[left], tree[right]);
   }
@@ -62,19 +51,14 @@ class SegmentTree {
 
   int _query(int node, int rangeStart, int rangeEnd, int l, int r) {
     // No overlap
-    if (r < rangeStart || rangeEnd < l) {
-      return -1000000000;
-    }
+    if (r < rangeStart || rangeEnd < l) return -1000000000;
 
     // Complete overlap
-    if (l <= rangeStart && rangeEnd <= r) {
-      return tree[node];
-    }
+    if (l <= rangeStart && rangeEnd <= r) return tree[node];
 
     int mid = (rangeStart + rangeEnd) ~/ 2;
 
-    int left = 2 * node + 1;
-    int right = 2 * node + 2;
+    int left = 2 * node + 1, right = 2 * node + 2;
 
     int leftMax = _query(left, rangeStart, mid, l, r);
     int rightMax = _query(right, mid + 1, rangeEnd, l, r);
