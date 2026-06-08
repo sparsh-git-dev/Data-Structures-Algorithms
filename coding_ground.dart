@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 
 import 'Linked_list/linked_list.dart';
+import 'trees/helpers/tree_node.dart';
 
 void main() {
   asteroidsDestroyed(5, [4, 9, 23, 4]);
@@ -39,4 +40,40 @@ bool asteroidsDestroyed(int mass, List<int> asteroids) {
   }
 
   return destroyed == n;
+}
+
+class Solution {
+  TreeNode? createBinaryTree(List<List<int>> descriptions) {
+    final Map<int, TreeNode> rec = {};
+    final Set<int> children = {};
+    for (List<int> d in descriptions) {
+      bool isleft = descriptions[2] == 1;
+      int parentNodeValue = d[0];
+      int childValue = d[1];
+      TreeNode childNode = TreeNode(childValue);
+      if (rec.containsKey(parentNodeValue)) {
+        if (isleft) {
+          rec[parentNodeValue]!.left = TreeNode(childValue);
+        } else {
+          rec[parentNodeValue]!.right = TreeNode(childValue);
+        }
+      } else {
+        TreeNode parentNode = TreeNode(parentNodeValue);
+        TreeNode childNode = TreeNode(childValue);
+        if (isleft) {
+          parentNode.left = childNode;
+        } else {
+          parentNode.right = childNode;
+        }
+        rec[parentNodeValue] = parentNode;
+      }
+      rec[childValue] = childNode;
+      children.add(childValue);
+    }
+    for (List<int> d in descriptions) {
+      if (children.contains(d[0])) continue;
+      return rec[d[0]];
+    }
+    return null;
+  }
 }
