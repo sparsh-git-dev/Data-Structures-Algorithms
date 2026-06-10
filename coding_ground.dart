@@ -6,74 +6,49 @@ import 'Linked_list/linked_list.dart';
 import 'trees/helpers/tree_node.dart';
 
 void main() {
-  asteroidsDestroyed(5, [4, 9, 23, 4]);
+  final nums = [1, 3, 2], k = 2;
+  int a = maxTotalValue(nums, k);
+  print(a);
 }
 
-bool asteroidsDestroyed(int mass, List<int> asteroids) {
-  asteroids.sort();
-  int n = asteroids.length;
-  int s = 0, e = n - 1;
-  int ans = -1;
-  int destroyed = 0;
-  while (s <= e) {
-    int m = (s + e) >> 1;
+int maxTotalValue(List<int> nums, int k) {
+  int ans = 0;
+  MinMaxSegmentTree t = MinMaxSegmentTree(nums);
+  List<List<int>> all = t.queue.toList();
 
-    if (mass >= m) {
-      ans = m;
-      s = m + 1;
-    } else {
-      e = m - 1;
-    }
+  for (int i = 0; i < k; i++) {
+    ans += all[i][0] - all[i][1];
   }
-  print(ans);
-  if (ans == -1) return false;
-
-  for (int i = ans; i >= 0; i--) {
-    mass += asteroids[i];
-    destroyed++;
-  }
-  for (int i = ans + 1; i < n; i++) {
-    if (mass >= asteroids[i]) {
-      mass += asteroids[i];
-      destroyed++;
-    }
-  }
-
-  return destroyed == n;
+  return ans;
 }
 
-class Solution {
-  TreeNode? createBinaryTree(List<List<int>> descriptions) {
-    final Map<int, TreeNode> rec = {};
-    final Set<int> children = {};
-    for (List<int> d in descriptions) {
-      bool isleft = descriptions[2] == 1;
-      int parentNodeValue = d[0];
-      int childValue = d[1];
-      TreeNode childNode = TreeNode(childValue);
-      if (rec.containsKey(parentNodeValue)) {
-        if (isleft) {
-          rec[parentNodeValue]!.left = TreeNode(childValue);
-        } else {
-          rec[parentNodeValue]!.right = TreeNode(childValue);
-        }
-      } else {
-        TreeNode parentNode = TreeNode(parentNodeValue);
-        TreeNode childNode = TreeNode(childValue);
-        if (isleft) {
-          parentNode.left = childNode;
-        } else {
-          parentNode.right = childNode;
-        }
-        rec[parentNodeValue] = parentNode;
-      }
-      rec[childValue] = childNode;
-      children.add(childValue);
+class MinMaxSegmentTree {
+  late final int n;
+  late final List<int> arr;
+  late final List<int> minTreeNodes;
+  late final List<int> maxTreeNodes;
+  PriorityQueue<List<int>> queue =
+      PriorityQueue((a, b) => (b[0] - b[1]).compareTo(a[0] - a[1]));
+
+  MinMaxSegmentTree(this.arr) {
+    n = arr.length;
+    minTreeNodes = List.filled(4 * n, 0);
+    maxTreeNodes = List.filled(4 * n, 0);
+    _buildTree(0, 0, n - 1);
+  }
+  void _buildTree(int node, int l, int r) {
+    if (l == r) {
+      maxTreeNodes[node] = arr[l];
+      minTreeNodes[node] = arr[l];
+      return;
     }
-    for (List<int> d in descriptions) {
-      if (children.contains(d[0])) continue;
-      return rec[d[0]];
-    }
-    return null;
+    int left = 2 * node + 1;
+    int right = 2 * node + 2;
+    int mid = (l + r) >> 1;
+    _buildTree(left, l, mid);
+    _buildTree(right, mid + 1, r);
+    minTreeNodes[node] = min(minTreeNodes[left], minTreeNodes[right]);
+    maxTreeNodes[node] = max(maxTreeNodes[left], maxTreeNodes[right]);
+    queue.add([maxTreeNodes[node], minTreeNodes[node]]);
   }
 }

@@ -1,5 +1,66 @@
 import 'dart:math';
 
+/*
+A standard segment tree **does not store every possible range**.
+It stores only a specific set of ranges that arise from recursively splitting the array into halves.
+For an array of size 8, the nodes store ranges like:
+
+```
+[0,7]
+├── [0,3]
+│   ├── [0,1]
+│   │   ├── [0,0]
+│   │   └── [0,1]
+│   └── [2,3]
+│       ├── [2,2]
+│       └── [3,3]
+└── [4,7]
+    ├── [4,5]
+    └── [6,7]
+```
+
+The stored ranges are:
+
+```
+[0,7]
+[0,3], [4,7]
+[0,1], [2,3], [4,5], [6,7]
+[0,0], [1,1], [2,2], [3,3], [4,4], [5,5], [6,6], [7,7]
+```
+
+Notice that ranges such as:
+
+```
+[1,4]
+[2,6]
+[1,3]
+[3,5]
+```
+
+are **not stored as individual nodes**.
+
+However, any query range can be represented as a union of a small number of stored ranges. For example:
+
+```
+[1,4] = [1,1] ∪ [2,3] ∪ [4,4]
+```
+
+and
+
+```
+[2,6] = [2,3] ∪ [4,5] ∪ [6,6]
+```
+
+This is the key idea behind segment trees:
+
+* Total possible ranges in an array of size (n): (n(n+1)/2) (quadratic).
+* Segment tree stores only (O(n)) carefully chosen ranges (about (2n) to (4n) nodes).
+* Any query interval can be decomposed into (O(\log n)) stored ranges.
+
+So the answer is:
+
+> **A segment tree misses most ranges as explicit nodes. It stores only the canonical ranges produced by recursive halving, but every possible range can be expressed as a union of a few stored nodes.**
+*/
 class SegmentTree {
   late List<int> tree, arr;
   late int n;
